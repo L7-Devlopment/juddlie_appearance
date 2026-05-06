@@ -229,6 +229,10 @@ local function setPedTattoos(pedHandle, tattoos)
       end
     end
   end
+
+  if config.rcoreTattoosCompatibility then
+    TriggerEvent("rcore_tattoos:applyOwnedTattoos")
+  end
 end
 
 ---@param model string|number
@@ -295,6 +299,11 @@ RegisterNetEvent("illenium-appearance:client:OpenBarberShop", function()
 end)
 
 RegisterNetEvent("illenium-appearance:client:OpenTattooShop", function()
+  if config.rcoreTattoosCompatibility then
+    logger.debug("illenium compat: OpenTattooShop ignored because rcore_tattoos compatibility is enabled")
+    return
+  end
+
   logger.debug("illenium compat: OpenTattooShop")
   menu.allowedTabs = { "tattoos" }
   menu.open()
